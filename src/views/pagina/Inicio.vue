@@ -1,3 +1,17 @@
 <template>
-    <h1>Página de Inicio</h1>
+    <div>
+       <Carousel></Carousel>
+    </div>
 </template>
+<script>
+import Carousel from "../../components/pagina/Carousel.vue"
+
+  export default {
+      components: {Carousel},
+    data () {
+      return {
+        
+      }
+    },
+  }
+</script>
