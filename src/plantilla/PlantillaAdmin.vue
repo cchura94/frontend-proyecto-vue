@@ -7,26 +7,43 @@
             app
         >
 
-        <v-list dense>
-      <v-subheader>REPORTS</v-subheader>
-      <v-list-item-group
-        v-model="selectedItem"
-        color="primary"
-      >
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-        >
-          <v-list-item-icon>
-            <v-icon v-text="item.icon"></v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.text"></v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list-item-group>
-    </v-list>
+       <v-list>
+         <template v-for="(item, i) in items">
+          <v-list-item :key="i" v-if="!item.children">
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
 
+            <v-list-item-title>{{item.text}}</v-list-item-title>
+          </v-list-item>
+
+
+          <v-list-group :key="i"
+            :value="true"
+            prepend-icon="mdi-account-circle"
+            v-if="item.children"
+          >
+        <template v-slot:activator>
+          <v-list-item-title>{{item.text}}</v-list-item-title>
+        </template>
+
+        <v-list-item
+            v-for="(sub_item, j) in item.children"
+            :key="j"
+            link
+          >
+            <v-list-item-title v-text="sub_item.text"></v-list-item-title>
+
+            <v-list-item-icon>
+              <v-icon v-text="sub_item.icon"></v-icon>
+            </v-list-item-icon>
+          </v-list-item>
+
+      </v-list-group>
+
+         </template>
+
+    </v-list>
          </v-navigation-drawer>
 
  <v-toolbar
@@ -69,21 +86,15 @@ export default {
             drawer: null,
             items: [
         { 
-            icon: 'mdi-contacts', text: 'Usuarios',
+            icon: 'mdi-account', text: 'Usuarios',
             children: [
-                { icon: 'mdi-add', text: 'Lista Usuario' },
-                { icon: 'mdi-add', text: 'Nuevo Usuario' }
+                { icon: 'mdi-account', text: 'Lista Usuario' },
+                { icon: 'mdi-new', text: 'Nuevo Usuario' }
             ] 
           },
         { icon: 'mdi-post', text: 'Productos' },
         { icon: 'mdi-post', text: 'Sucursal' },
         
-       
-        { icon: 'mdi-settings', text: 'Categorias' },
-        { icon: 'mdi-chat_bubble', text: 'Send feedback' },
-        { icon: 'mdi-help', text: 'Help' },
-        { icon: 'mdi-phonelink', text: 'App downloads' },
-        { icon: 'mdi-keyboard', text: 'Go to the old version' }
       ]
         }
     }
