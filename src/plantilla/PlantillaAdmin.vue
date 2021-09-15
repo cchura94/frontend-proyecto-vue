@@ -2,7 +2,7 @@
     <div>
          <v-navigation-drawer
             v-model="drawer"
-            clipped="false"
+            :clipped="false"
             fixed
             app
         >
@@ -47,10 +47,9 @@
          </v-navigation-drawer>
 
  <v-toolbar
-      :clipped-left="true"
+      :clipped="true"
       color="blue darken-3"
       dark
-      app
       fixed
     >
       <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
