@@ -7,43 +7,45 @@
             app
         >
 
-       <v-list>
-         <template v-for="(item, i) in items">
-          <v-list-item :key="i" v-if="!item.children">
-            <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
+    <v-list>
+      <template v-for="(menu, i) in items">
 
-            <v-list-item-title>{{item.text}}</v-list-item-title>
-          </v-list-item>
+      <v-list-item :key="i" v-if="!menu.children" :to="menu.url">
+        <v-list-item-icon>
+          <v-icon>{{menu.icon}}</v-icon>
+        </v-list-item-icon>
 
+        <v-list-item-title>{{ menu.text }}</v-list-item-title>
+      </v-list-item>
 
-          <v-list-group :key="i"
-            :value="true"
-            prepend-icon="mdi-account-circle"
-            v-if="item.children"
-          >
+      <v-list-group :key="i" v-if="menu.children"
+        :value="true"
+        prepend-icon="mdi-account-circle"
+        no-action
+      >
         <template v-slot:activator>
-          <v-list-item-title>{{item.text}}</v-list-item-title>
+          <v-list-item-content>
+            <v-list-item-title v-text="menu.text"></v-list-item-title>
+          </v-list-item-content>
         </template>
 
         <v-list-item
-            v-for="(sub_item, j) in item.children"
-            :key="j"
-            link
-          >
-            <v-list-item-title v-text="sub_item.text"></v-list-item-title>
-
-            <v-list-item-icon>
-              <v-icon v-text="sub_item.icon"></v-icon>
+          v-for="(child, j) in menu.children"
+          :key="j"
+          :to="child.url"
+        >
+          <v-list-item-content>
+            <v-list-item-title v-text="child.text"></v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-icon>
+              <v-icon v-text="child.icon"></v-icon>
             </v-list-item-icon>
-          </v-list-item>
+        </v-list-item>
 
       </v-list-group>
-
-         </template>
-
+      </template>
     </v-list>
+
          </v-navigation-drawer>
 
  <v-toolbar
@@ -87,12 +89,12 @@ export default {
         { 
             icon: 'mdi-account', text: 'Usuarios',
             children: [
-                { icon: 'mdi-account', text: 'Lista Usuario' },
-                { icon: 'mdi-new', text: 'Nuevo Usuario' }
+                { icon: 'mdi-account', text: 'Lista Usuario', url: '/admin/usuario' },
+                { icon: 'mdi-new', text: 'Nuevo Usuario', url: '/admin/usuario/nuevo' }
             ] 
           },
-        { icon: 'mdi-post', text: 'Productos' },
-        { icon: 'mdi-post', text: 'Sucursal' },
+        { icon: 'mdi-post', text: 'Productos', url: '/admin/producto' },
+        { icon: 'mdi-post', text: 'Sucursal', url: '/admin/sucursal' },
         
       ]
         }
