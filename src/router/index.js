@@ -5,6 +5,7 @@ import PlantillaAdmin from '../plantilla/PlantillaAdmin'
 import PlantillaPagina from '../plantilla/PlantillaPagina'
 import ListaUsuario from '../views/admin/usuario/ListaUsuario.vue'
 import NuevoUsuario from '../views/admin/usuario/NuevoUsuario.vue'
+import EditarUsuario from '../views/admin/usuario/EditarUsuario.vue'
 import Usuario from '../views/admin/usuario/Usuario.vue'
 import Producto from '../views/admin/Producto.vue'
 import Sucursal from '../views/admin/Sucursal.vue'
@@ -65,6 +66,11 @@ const routes = [
             path: 'nuevo',
             name: 'NuevoUsuario',
             component: NuevoUsuario
+          },
+          {
+            path: ':id/editar',
+            name: 'EditarUsuario',
+            component: EditarUsuario
           },
         ]
       },

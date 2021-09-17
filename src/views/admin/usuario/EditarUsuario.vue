@@ -1,10 +1,10 @@
 <template>
-  <div>
+     <div>
     <v-layout align-center justify-center>
       <v-flex xs12 sm10 md8>
         <v-card class="elevation-6">
           <v-toolbar >
-            <v-toolbar-title>Nuevo Usuario</v-toolbar-title>
+            <v-toolbar-title>Editar Usuario</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
             <v-form ref="formRegistro" v-model="valido" lazy-validation>
@@ -40,8 +40,8 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click="registrarUsuario()" :disabled="!valido"
-              >Registrar Usuario</v-btn
+            <v-btn color="primary" @click="modificarUsuario()" :disabled="!valido"
+              >Modificar Usuario</v-btn
             >
           </v-card-actions>
 
@@ -65,18 +65,18 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios"
 
 export default {
-  data(){
-    return {
-      valido: true,
-      usuario: {
-        nombre: '',
-        correo: '',
-        password: ''
-      },
-       correoRules: [
+    data(){
+        return {
+            usuario: {
+                nombre: '',
+                correo: '',
+                password: ''
+            },
+            valido: true,
+ correoRules: [
                 v => !!v || 'El Correo es obligatorio',
                 v => /.+@.+\..+/.test(v) || 'El correo no es Valido',
             ],
@@ -85,13 +85,22 @@ export default {
             ],
               snackbar: false,
             snackbar_text: '',
-    }
-  },
-  methods:{
-    async registrarUsuario(){
-
-       const {data} = await axios.post('http://127.0.0.1:3000/api/usuario', this.usuario);
-      console.log(data);
+        }
+    },
+    async mounted(){
+        let id = this.$route.params.id
+        
+        const {data} = await axios.get('http://127.0.0.1:3000/api/usuario/'+id);
+        console.log(data);
+        this.usuario = data[0]
+        this.usuario.password = ""
+    },
+    methods:{
+        async modificarUsuario(){
+            let id = this.$route.params.id
+        
+        const {data} = await axios.put('http://127.0.0.1:3000/api/usuario/'+id, this.usuario);
+          console.log(data);
       if(data.error == true){
         this.snackbar = true
         this.snackbar_text = data.mensaje
@@ -99,11 +108,12 @@ export default {
 
         this.$router.push({name: 'ListaUsuario'})
       }
-
+        }
     }
-  }
-};
+
+}
 </script>
 
 <style>
+
 </style>

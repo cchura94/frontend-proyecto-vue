@@ -36,8 +36,12 @@
           <td>{{ usuario.correo }}</td>
           <td>{{ usuario.estado }}</td>
           <td>
-            <v-btn>editar</v-btn>
-            <v-btn>eliminar</v-btn>
+            <v-btn icon color="warning" :to="`/admin/usuario/${usuario.id}/editar`">
+              <v-icon>mdi-pencil</v-icon>
+            </v-btn>
+            <v-btn icon color="danger" @click="eliminarUsuario(usuario)">
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
           </td>
         </tr>
       </tbody>
@@ -46,6 +50,7 @@
       
       </v-card>
      
+      
   </div>
 </template>
 
@@ -55,7 +60,8 @@ import axios from 'axios'
 export default {
   data(){
     return {
-      lista_usuarios: []
+      lista_usuarios: [],
+     
     }
   },
   mounted(){
@@ -65,10 +71,14 @@ export default {
     async getListarUsuarios(){
       // consumir desde node con axios
       const {data} = await axios.get('http://127.0.0.1:3000/api/usuario');
+      
       this.lista_usuarios = data
     },
-    nuevoUsuario(){
-
+    async eliminarUsuario(usuario){
+      if(confirm("¿Está Seguro de eliminar el registro?")){
+        const {data} = await axios.delete('http://127.0.0.1:3000/api/usuario/'+usuario.id);
+        this.getListarUsuarios()
+      }
     }
   }
 
